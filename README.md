@@ -2,8 +2,8 @@ Bluetooth Low-Energy BTHome (ESPHome) proxy for ESP32 devices. Proxies multiple 
 
 Tested with LYWSD03MMC thermometers - they're super-cheap.
 
-Last update 2024-12-30. 
-Author: Lucian Sabo (luciansabo@gmail.com)
+Last update 2024-12-30.   
+Author: Lucian Sabo  
 Based on John Mueller work (johnmu.com)
 
 ## Goals
