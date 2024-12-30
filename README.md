@@ -1,5 +1,3 @@
-# ble_proxy_esphome
-
 Bluetooth Low-Energy BTHome (ESPHome) proxy for ESP32 devices. Proxies multiple BTLE devices using BTHome for Home assistant and EspNow for your custom devices.
 
 Tested with LYWSD03MMC thermometers - they're super-cheap.
