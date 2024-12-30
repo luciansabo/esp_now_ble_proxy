@@ -1,0 +1,14 @@
+# ESPHome specific
+/.esphome/
+**/.pioenvs/
+**/.piolibdeps/
+**/lib/
+**/src/
+**/platformio.ini
+**/partitions.csv
+**/**/__pycache__/
+/.venv/
+
+# Your secrets file
+/secrets.yaml
+/esp_now_ble_proxy.yaml
