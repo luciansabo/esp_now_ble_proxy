@@ -26,17 +26,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #ifdef ARDUINO_ARCH_ESP32
 
 namespace esphome {
-namespace ble_proxy {
+namespace esp_now_ble_proxy {
 
 static const char *TAG = "ble_proxy";
 
-uint32_t BLE_PROXY::calculate_crc32(const uint8_t *data, size_t len) {
+uint32_t ESP_NOW_BLE_PROXY::calculate_crc32(const uint8_t *data, size_t len) {
     uint32_t crc = esp_crc32_le(UINT32_MAX, (const uint8_t *)security_key_.c_str(), security_key_.size()); // Start with the CRC of the secret key
     crc = esp_crc32_le(crc, data, len); // Continue with the data
     return crc;
 }
 
-void BLE_PROXY::init_esp_now() {
+void ESP_NOW_BLE_PROXY::init_esp_now() {
 
   esp_now_peer_info_t peerInfo = {};
   esp_wifi_set_mode(WIFI_MODE_STA);
@@ -64,7 +64,7 @@ void BLE_PROXY::init_esp_now() {
 
 /* Handle BLE device, check if we need to track & forward it
 */
-bool BLE_PROXY::parse_device(const esp32_ble_tracker::ESPBTDevice &device) {
+bool ESP_NOW_BLE_PROXY::parse_device(const esp32_ble_tracker::ESPBTDevice &device) {
   // skip random BLE devices
   esp_ble_addr_type_t d_type = device.get_address_type();
   if ((d_type==BLE_ADDR_TYPE_RANDOM) || (d_type==BLE_ADDR_TYPE_RPA_RANDOM)) return false;
@@ -124,7 +124,7 @@ bool BLE_PROXY::parse_device(const esp32_ble_tracker::ESPBTDevice &device) {
 
 /* Check if it's time to reboot this device
 */
-void BLE_PROXY::check_auto_reboot() {
+void ESP_NOW_BLE_PROXY::check_auto_reboot() {
   if (this->reboot_millis_>0) {
     if (millis() > this->reboot_millis_) { 
       // no overflow, since we're counting from boot
@@ -137,7 +137,7 @@ void BLE_PROXY::check_auto_reboot() {
 
 /* Get name of this device, taking into account mappings
 */
-std::string BLE_PROXY::get_device_name(const esp32_ble_tracker::ESPBTDevice &device) {
+std::string ESP_NOW_BLE_PROXY::get_device_name(const esp32_ble_tracker::ESPBTDevice &device) {
   std::string mymac(device.address_str());  // MAC address
   for (auto elem : this->macs_rename_) {
     if (elem.find(mymac + "=") == 0) { // rename entry starts with MAC address
@@ -149,7 +149,7 @@ std::string BLE_PROXY::get_device_name(const esp32_ble_tracker::ESPBTDevice &dev
 
 /* Check if we can track this device
 */
-bool BLE_PROXY::can_track(const esp32_ble_tracker::ESPBTDevice &device) {
+bool ESP_NOW_BLE_PROXY::can_track(const esp32_ble_tracker::ESPBTDevice &device) {
   std::string mymac(device.address_str());  // MAC address
   if (!(this->macs_allowed_.empty())) { // allow-list exists, must follow it
     if (this->macs_allowed_.find(mymac) == this->macs_allowed_.end()) {
@@ -165,7 +165,7 @@ bool BLE_PROXY::can_track(const esp32_ble_tracker::ESPBTDevice &device) {
 }
 
 
-void BLE_PROXY::update_ble_enabled(bool enabled_yes) {
+void ESP_NOW_BLE_PROXY::update_ble_enabled(bool enabled_yes) {
   esp_err_t err;
   ESP_LOGD(TAG, "update_ble_enable to %i", (enabled_yes?1:0));
   if (enabled_yes) { // Enable BLE
@@ -206,7 +206,7 @@ void BLE_PROXY::update_ble_enabled(bool enabled_yes) {
   }
 }
 
-}  // namespace ble_proxy
+}  // namespace esp_now_ble_proxy
 }  // namespace esphome
 
 // #endif

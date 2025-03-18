@@ -82,24 +82,24 @@ class ESP_NOW_BLE_PROXY : public Component, public esp32_ble_tracker::ESPBTDevic
 
 template<typename... Ts> class BleEnableAction : public Action<Ts...> {
   public:
-    BleEnableAction(BLE_PROXY *ble_prox) : ble_prox_(ble_prox) {}
+    BleEnableAction(ESP_NOW_BLE_PROXY *ble_prox) : ble_prox_(ble_prox) {}
     void play(Ts... x) override { this->ble_prox_->update_ble_enabled(true); }
 
   protected:
-    BLE_PROXY *ble_prox_;
+    ESP_NOW_BLE_PROXY *ble_prox_;
 };
 
 template<typename... Ts> class BleDisableAction : public Action<Ts...> {
   public:
-    BleDisableAction(BLE_PROXY *ble_prox) : ble_prox_(ble_prox) {}
+    BleDisableAction(ESP_NOW_BLE_PROXY *ble_prox) : ble_prox_(ble_prox) {}
     void play(Ts... x) override { this->ble_prox_->update_ble_enabled(false); }
 
   protected:
-    BLE_PROXY *ble_prox_;
+    ESP_NOW_BLE_PROXY *ble_prox_;
 };
 
 
-}  // namespace ble_proxy
+}  // namespace esp_now_ble_proxy
 }  // namespace esphome
 
 // #endif

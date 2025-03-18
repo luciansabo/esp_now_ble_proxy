@@ -8,6 +8,7 @@
 **/partitions.csv
 **/**/__pycache__/
 /.venv/
+/venv/
 
 # Your secrets file
 /secrets.yaml
