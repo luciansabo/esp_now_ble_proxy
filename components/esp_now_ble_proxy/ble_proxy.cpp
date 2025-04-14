@@ -69,6 +69,10 @@ bool ESP_NOW_BLE_PROXY::parse_device(const esp32_ble_tracker::ESPBTDevice &devic
   esp_ble_addr_type_t d_type = device.get_address_type();
   if ((d_type==BLE_ADDR_TYPE_RANDOM) || (d_type==BLE_ADDR_TYPE_RPA_RANDOM)) return false;
 
+  if (!can_track(device)) {
+     return false;
+  }
+
   for (auto &service_data : device.get_service_datas()) {
     esphome::esp32_ble_tracker::adv_data_t x = service_data.data;
     //ESP_LOGD("ble_adv", "ble data: %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x ",  x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16]);
